@@ -41,12 +41,15 @@ def send_request_66ip():
     #爬取7页，可自行修改
     for i in range(1,2):
         print(f'正在抓取第{i}页……')
-        response = requests.get(url=f'http://www.66ip.cn/{i}.html', headers=request_header())
+        url = f'http://www.66ip.cn/{i}.html'
+        print(url)
+        response = requests.get(url, headers=request_header())
+
         text = response.text.encode('ISO-8859-1')
         # print(text.decode('gbk'))
         #使用xpath解析，提取出数据ip，端口
         html = etree.HTML(text)
-        tr_list = html.xpath('/html/body/div[4]/div[1]/div[1]/table/tbody/tr')
+        tr_list = html.xpath('/html/body/div[4]/div[1]/div[2]/div[1]/table/tbody/tr')
         print(tr_list)
         for td in tr_list:
             ip_ = td.xpath('./td[1]/text()')[0] #ip
@@ -80,7 +83,7 @@ def test_ip(proxy):
         print(proxy,'请求异常')
 
 if __name__ == '__main__':
-    send_request_66ip()
+    send_request_ip3366()
     # ip =  ['103.156.16.169:8080', '103.174.4.115:8080', '103.144.79.186:8080']
     # for i in ip:
     #     test_ip(i)
