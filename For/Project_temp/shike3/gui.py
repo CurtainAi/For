@@ -23,7 +23,7 @@ class Ui_Form(object):
         self.tableWidget.setGeometry(QtCore.QRect(10, 20, 931, 411))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(6)
-        self.tableWidget.setRowCount(2000)
+        self.tableWidget.setRowCount(1000)
         self.tableWidget.setHorizontalHeaderLabels(['title', 'applyAll', 'apply', 'send', 'url', 'urlPic'])
         self.pushButton_2 = QtWidgets.QPushButton(Form)
         self.pushButton_2.setGeometry(QtCore.QRect(20, 460, 100, 50))

@@ -1,11 +1,15 @@
 import sys,requests,re,time
 from gui import Ui_Form
 from PyQt5.QtWidgets import QApplication,QMainWindow,QTableWidgetItem
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QThread, pyqtSignal
 
 regularList = r'"(http://\w+.shikee.com/\d+\.html)"[\S\s\n]*?"([\w\:/\.\_\s]*?\.jpg)"[\S\s\n]*?alt="(.*?)">[\S\s\n]*?份数：[\S\s\n]*?>(\d+)<[\S\s\n]*?申请人数：[\S\s\n^\d]*?(\d+)</[\S\s\n]*?邮费：[\S\s\n]*?red">(.*?)<'
 
 
 class MainWindow(QMainWindow):
+    my_str = pyqtSignal(str)
+
     def __init__(self,parent = None):
         super(MainWindow, self).__init__(parent)
         self.ui = Ui_Form()
@@ -19,7 +23,7 @@ class MainWindow(QMainWindow):
         #_translate = self.ui.QtCore.QCoreApplication.translate
 
         #self.pushButton_2.clicked.connect(Form.getList)
-        pageAll = 3
+        pageAll = 30
         listAll = []
         i = -1
         for page in range(pageAll):
@@ -31,15 +35,29 @@ class MainWindow(QMainWindow):
             time.sleep(2)
             for j,list in enumerate(resRrray):
                 i += 1
-                print(i,list[2])
 
-                newItem = self.ui.Q.
-                self.ui.tablewidget.setItem(i, 0, newItem)
+                newItem = QTableWidgetItem(list[2])
+                self.ui.tableWidget.setItem(i,0,newItem)
+                newItem = QTableWidgetItem(list[3])
+                self.ui.tableWidget.setItem(i,1,newItem)
+                newItem = QTableWidgetItem(list[4])
+                self.ui.tableWidget.setItem(i,2,newItem)
+                newItem = QTableWidgetItem(list[5])
+                self.ui.tableWidget.setItem(i,3,newItem)
+                newItem = QTableWidgetItem(list[0])
+                self.ui.tableWidget.setItem(i,4,newItem)
+                newItem = QTableWidgetItem(list[1])
+                self.ui.tableWidget.setItem(i,5,newItem)
+
+                # sys.exit(app.exec_())
+
                 listAll.append(list)
         print('获取完成，共获取页{}内容，应获取{}条数据，实际获取{}条数据。'.format(pageAll,pageAll*20,len(listAll)))
         self.ui.pushButton_2.setText('Start')
         self.ui.pushButton_2.setEnabled(True)
-        return listAll
+
+        self.my_str.emit("ok")
+        #return listAll
 
     def clearResult(self):
         print(2)
