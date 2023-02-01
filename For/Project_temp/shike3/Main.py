@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         #_translate = self.ui.QtCore.QCoreApplication.translate
 
         #self.pushButton_2.clicked.connect(Form.getList)
-        pageAll = 30
+        pageAll = 5
         listAll = []
         i = -1
         for page in range(pageAll):
